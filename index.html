@@ -1,0 +1,1606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1015">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ben 10 Archive">
+<link id="pwa-manifest" rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Ben%2010%20Media%20Archive%22%2C%22short_name%22%3A%22Ben%2010%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b1015%22%2C%22theme_color%22%3A%22%230b1015%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%2520viewBox%3D%270%25200%2520192%2520192%27%253E%253Crect%2520width%3D%27192%27%2520height%3D%27192%27%2520rx%3D%2742%27%2520fill%3D%27%25230b1015%27%2F%3E%253Ccircle%2520cx%3D%2796%27%2520cy%3D%2796%27%2520r%3D%2768%27%2520fill%3D%27none%27%2520stroke%3D%27%25238be04b%27%2520stroke-width%3D%2710%27%2F%3E%253Ctext%2520x%3D%2796%27%2520y%3D%27116%27%2520text-anchor%3D%27middle%27%2520fill%3D%27%2523b5f477%27%2520font-family%3D%27system-ui%2Csans-serif%27%2520font-size%3D%2764%27%2520font-weight%3D%27800%27%3E10%253C%2Ftext%3E%253C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%22%7D%5D%7D">
+<title>Ben 10 — Media Archive</title>
+<style>
+:root{--bg:#0b1015;--panel:#121a22;--panel2:#18232d;--line:#293744;--text:#edf4f7;--muted:#a6b4bd;--green:#8be04b;--green2:#b5f477;--orange:#ffc36b;--blue:#8ecbff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#1b3026 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{padding:30px max(18px,calc((100vw - 1220px)/2));border-bottom:1px solid var(--line);background:linear-gradient(120deg,rgba(45,92,42,.35),rgba(12,20,28,.9))}
+h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.02;margin:0 0 10px;letter-spacing:-.04em}h1 span{color:var(--green)}
+.sub{max-width:850px;color:#c1cdd2}.wrap{max-width:1220px;margin:auto;padding:20px 18px 60px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{display:block;font-size:1.55rem;color:var(--green)}.stat small{color:var(--muted)}
+.controls{position:sticky;top:0;z-index:5;background:rgba(11,16,21,.94);backdrop-filter:blur(12px);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:18px}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px}
+input,select,button{font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+input::placeholder{color:#84949e}button{cursor:pointer}button:hover{border-color:var(--green)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.actions button{font-size:.88rem}
+.progress{height:9px;background:#26323b;border-radius:30px;overflow:hidden;margin:12px 0 4px}.bar{height:100%;width:0;background:linear-gradient(90deg,#5da92d,var(--green2));transition:width .2s}
+.note{font-size:.86rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{display:grid;grid-template-columns:112px 1fr;gap:14px;padding:12px;background:linear-gradient(145deg,var(--panel),#101820);border:1px solid var(--line);border-radius:15px;min-width:0;align-items:center}
+.poster{width:112px;height:158px;object-fit:cover;border-radius:9px;background:#202c35;border:1px solid #33424d}.placeholder{width:112px;height:158px;border-radius:9px;background:linear-gradient(145deg,#1c3025,#1b2530);display:grid;place-items:center;color:#a5d77d;font-size:2rem;border:1px solid #33424d}
+.card h3{font-size:1.05rem;margin:0 0 6px;line-height:1.25}.meta{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.pill{font-size:.74rem;border:1px solid #3a4a56;border-radius:30px;padding:2px 9px;color:#c9d5da}.pill.type{color:#b8e8a0;border-color:#4b7040}.pill.status{color:var(--orange)}.pill.prod{color:#9bcaff;border-color:#365470}.pill.era{color:#e0b8ff;border-color:#644680}.cardfoot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}.check{display:flex;align-items:center;gap:7px;color:var(--green2);font-size:.85rem;cursor:pointer}.check input{accent-color:#85d844;width:17px;height:17px;padding:0}.source{color:#9bcaff;font-size:.78rem;text-decoration:none}.source:hover{text-decoration:underline}.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+footer{margin-top:35px;padding:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem}
+@media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.card{grid-template-columns:84px 1fr;gap:10px;padding:9px}.poster,.placeholder{width:84px;height:122px}.stats{gap:7px}.stat{padding:10px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>BEN <span>10</span><br>MEDIA ARCHIVE</h1>
+  <div class="sub">Ordered era-by-era: each era starts with its TV Show, followed by its Movies, Comics, and Games.</div>
+  <div class="note" style="margin-top:10px">Personal progress is saved in this browser on this device.</div>
+</header>
+<div class="wrap">
+  <section class="stats">
+    <div class="stat"><b id="total">0</b><small>Archive entries</small></div>
+    <div class="stat"><b id="completed">0</b><small>Completed</small></div>
+    <div class="stat"><b id="remaining">0</b><small>Remaining</small></div>
+    <div class="stat"><b id="percent">0%</b><small>Overall progress</small></div>
+  </section>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="note" id="progressText">Start checking off your collection.</div>
+
+  <div class="controls">
+    <div class="filters">
+      <input id="search" type="search" placeholder="Search titles, era, type, year, production…">
+      <select id="type"><option value="">All media types</option></select>
+      <select id="status"><option value="">All statuses</option><option>Released</option><option>Upcoming</option></select>
+    </div>
+    <div class="actions">
+      <button id="showAll">Show all</button><button id="showIncomplete">Incomplete only</button><button id="showDone">Completed only</button>
+      <button id="sortStory">Era order ✓</button><button id="sortRelease">Release year</button><button id="reset">Reset progress</button>
+    </div>
+  </div>
+
+  <main class="grid" id="results"></main>
+  <footer>
+    <b>Archive notes</b><br>
+    Each era follows: Show &rarr; Movies &rarr; Comics &rarr; Games.
+  </footer>
+</div>
+<script>
+const DATA = [
+  {
+    "id": "item-1",
+    "order": 1,
+    "era": "Classic Era",
+    "title": "Ben 10",
+    "type": "TV Show",
+    "year": 2005,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://i.pinimg.com/originals/94/bc/82/94bc8224c280abb6004813d2ec3c64af.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10_(2005_TV_series)"
+  },
+  {
+    "id": "item-2",
+    "order": 2,
+    "era": "Classic Era",
+    "title": "Ben 10: Secret of the Omnitrix",
+    "type": "Movie",
+    "year": 2007,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://i.ebayimg.com/images/g/Y-gAAOSw~stlG7M9/s-l400.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_films"
+  },
+  {
+    "id": "item-3",
+    "order": 3,
+    "era": "Classic Era",
+    "title": "Ben 10: Race Against Time",
+    "type": "Movie",
+    "year": 2007,
+    "production": "Trouper Productions (Live-Action)",
+    "status": "Released",
+    "image": "https://image.tmdb.org/t/p/w500/yJ3PXj1fr5P5jFKiKEGrKrTTDXi.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_films"
+  },
+  {
+    "id": "item-4",
+    "order": 4,
+    "era": "Classic Era",
+    "title": "Ben 10: Destroy All Aliens",
+    "type": "Movie",
+    "year": 2012,
+    "production": "Cartoon Network Studios Asia",
+    "status": "Released",
+    "image": "https://upload.wikimedia.org/wikipedia/en/e/ed/Ben-10-Destroy-All-Aliens-Poster.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_films"
+  },
+  {
+    "id": "item-5",
+    "order": 5,
+    "era": "Classic Era",
+    "title": "Ben 10",
+    "type": "Comic",
+    "year": 2006,
+    "production": "DC Comics",
+    "status": "Released",
+    "image": "https://i.ebayimg.com/images/g/jxEAAOSwKC9kD-fi/s-l400.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-6",
+    "order": 6,
+    "era": "Classic Era",
+    "title": "Cartoon Network Action Pack",
+    "type": "Comic",
+    "year": 2006,
+    "production": "DC Comics",
+    "status": "Released",
+    "image": "https://static.dc.com/dc/files/default_images/15609_900x1350.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-7",
+    "order": 7,
+    "era": "Classic Era",
+    "title": "Ben 10: HyperScan",
+    "type": "Game",
+    "year": 2006,
+    "production": "Mattel HyperScan",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/4/47/Ben10-HyperScan-GamePack.png/revision/latest?cb=20160119082132",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-8",
+    "order": 8,
+    "era": "Classic Era",
+    "title": "Ben 10: Battle Ready",
+    "type": "Game",
+    "year": 2006,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://i.redd.it/zvmvmaaxbly31.jpg",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-9",
+    "order": 9,
+    "era": "Classic Era",
+    "title": "Ben 10: Blockade Blitz",
+    "type": "Game",
+    "year": 2006,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coc57l.jpg",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-10",
+    "order": 10,
+    "era": "Classic Era",
+    "title": "Ben 10: Samurai Warrior",
+    "type": "Game",
+    "year": 2007,
+    "production": "Glu Mobile (Java)",
+    "status": "Released",
+    "image": "https://www.capsulecomputers.com.au/wp-content/uploads/2012/06/ben-10-samurai-warrior-05.jpg",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-11",
+    "order": 11,
+    "era": "Classic Era",
+    "title": "Ben 10: Power Splash",
+    "type": "Game",
+    "year": 2007,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/7/75/Ben10-Power_Splash_CartoonNetworkGame.png/revision/latest?cb=20231031125829",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-12",
+    "order": 12,
+    "era": "Classic Era",
+    "title": "Ben 10: Krakken Attack",
+    "type": "Game",
+    "year": 2007,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/c/c0/Ben10krakkenattack.png/revision/latest?cb=20241226101450",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-13",
+    "order": 13,
+    "era": "Classic Era",
+    "title": "Ben 10: The Alien Device",
+    "type": "Game",
+    "year": 2007,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/1/17/TheAlienDevice.png/revision/latest?cb=20210613075009",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-14",
+    "order": 14,
+    "era": "Classic Era",
+    "title": "Ben 10: The Mystery of the Mayan Sword",
+    "type": "Game",
+    "year": 2007,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/3/39/Mystery_of_the_Mayan_Sword.png/revision/latest?cb=20201208154806",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-15",
+    "order": 15,
+    "era": "Classic Era",
+    "title": "Ben 10: Savage Pursuit",
+    "type": "Game",
+    "year": 2007,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/b/bc/SavagePursuitNoRATBen.png/revision/latest?cb=20220816075411",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-16",
+    "order": 16,
+    "era": "Classic Era",
+    "title": "Ben 10: Protector of Earth",
+    "type": "Game",
+    "year": 2007,
+    "production": "High Voltage Software / D3",
+    "status": "Released",
+    "image": "https://i.ebayimg.com/images/g/MnoAAOSwWuNgI~ad/s-l1200.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-17",
+    "order": 17,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Alien Force",
+    "type": "TV Show",
+    "year": 2008,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://image.tmdb.org/t/p/w500/lMWR5pOy05wrP5uBVLrFq7PAS2z.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_television_series"
+  },
+  {
+    "id": "item-18",
+    "order": 18,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Alien Swarm",
+    "type": "Movie",
+    "year": 2009,
+    "production": "Trouper Productions (Live-Action)",
+    "status": "Released",
+    "image": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p7883779_p_v13_aa.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_films"
+  },
+  {
+    "id": "item-19",
+    "order": 19,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Alien Force \u2013 Doom Dimension",
+    "type": "Comic",
+    "year": 2008,
+    "production": "Del Rey Manga",
+    "status": "Released",
+    "image": "https://i.redd.it/fvad7iikxm991.jpg",
+    "source": "https://ben10.fandom.com/wiki/Alien_Force"
+  },
+  {
+    "id": "item-20",
+    "order": 20,
+    "era": "Alien Force Era",
+    "title": "Cartoon Network Action Pack",
+    "type": "Comic",
+    "year": 2008,
+    "production": "DC Comics",
+    "status": "Released",
+    "image": "https://i.ebayimg.com/images/g/1uAAAOSwk~peXF7H/s-l1200.jpg",
+    "source": "https://ben10.fandom.com/wiki/Alien_Force"
+  },
+  {
+    "id": "item-21",
+    "order": 21,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Alien Force",
+    "type": "Game",
+    "year": 2008,
+    "production": "Monkey Bar Games / D3",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/4/48/Alien_Force_game.png/revision/latest?cb=20170406224429",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-22",
+    "order": 22,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Power of the Omnitrix",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/c/c4/Ben_10_Power_of_the_Omnitrix.png/revision/latest?cb=20241106165520",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-23",
+    "order": 23,
+    "era": "Alien Force Era",
+    "title": "Ben 10: All Out Attack",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/d/da/Ben_10_All_Out_Attack.png/revision/latest/thumbnail/width/360/height/360?cb=20250721003058",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-24",
+    "order": 24,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Battle for the Omnitrix",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/e/e7/Battle_for_the_Omnitrix.png/revision/latest/thumbnail/width/360/height/360?cb=20260716024839",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-25",
+    "order": 25,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Break In",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/3/37/Breakpoint_profile.png/revision/latest?cb=20141028225802",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-26",
+    "order": 26,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Bust Out",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://dualstack.cloudinary.com/mobiassets/image/upload/e_auto_contrast/e_sharpen/c_fill,h_480,w_480/f_auto,fl_progressive,fl_force_strip/456243_Ben10_Alien_Force_Break_In_and_Bust_Out.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-27",
+    "order": 27,
+    "era": "Alien Force Era",
+    "title": "Ben 10: Vengeance of Vilgax",
+    "type": "Game",
+    "year": 2008,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/2/2b/Vengeance_of_Vilgax5.png/revision/latest?cb=20251222035318",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-28",
+    "order": 28,
+    "era": "Alien Force Era",
+    "title": "Ben 10 Alien Force: Vilgax Attacks",
+    "type": "Game",
+    "year": 2009,
+    "production": "Papaya Studio / D3",
+    "status": "Released",
+    "image": "https://images.igdb.com/igdb/image/upload/t_1080p_2x/co31ic.webp",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-29",
+    "order": 29,
+    "era": "Alien Force Era",
+    "title": "Ben 10 Alien Force: The Rise of Hex",
+    "type": "Game",
+    "year": 2010,
+    "production": "Black Lantern Studios",
+    "status": "Released",
+    "image": "https://upload.wikimedia.org/wikipedia/en/d/d6/Ben10RiseofHex.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-30",
+    "order": 30,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimate Alien",
+    "type": "TV Show",
+    "year": 2010,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://pbs.twimg.com/media/Fm2VQCmXgAEZxVv.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_television_series"
+  },
+  {
+    "id": "item-31",
+    "order": 31,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10 / Generator Rex: Heroes United",
+    "type": "TV Special",
+    "year": 2011,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://upload.wikimedia.org/wikipedia/en/7/7e/Heroes_United_Logo.png",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-32",
+    "order": 32,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimate Alien",
+    "type": "Comic",
+    "year": 2010,
+    "production": "IDW Publishing",
+    "status": "Released",
+    "image": "https://iwt.sfo2.cdn.digitaloceanspaces.com/cbr-covers/cf1200e68bc36ae14e5c7b762dc0433c_xl.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-33",
+    "order": 33,
+    "era": "Ultimate Alien Era",
+    "title": "Cartoon Network Action Pack",
+    "type": "Comic",
+    "year": 2010,
+    "production": "DC Comics",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/marvel_dc/images/b/b7/Cartoon_Network_Action_Pack_Vol_1_50.jpg/revision/latest?cb=20110730162537",
+    "source": "https://ben10.fandom.com/wiki/Alien_Force"
+  },
+  {
+    "id": "item-34",
+    "order": 34,
+    "era": "Ultimate Alien Era",
+    "title": "Ultimate Alien Comic Pack Stories",
+    "type": "Comic",
+    "year": 2010,
+    "production": "Bandai / Cartoon Network",
+    "status": "Released",
+    "image": "https://media.entertainmentearth.com/assets/images/dba621ab46cb42668197d01cca9db157lg.jpg",
+    "source": "https://ben10.fandom.com/wiki/Alien_Force"
+  },
+  {
+    "id": "item-35",
+    "order": 35,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimate Alien: Cosmic Destruction",
+    "type": "Game",
+    "year": 2010,
+    "production": "Papaya Studio / D3",
+    "status": "Released",
+    "image": "https://upload.wikimedia.org/wikipedia/en/a/a0/Ben_10_Ultimate_Alien_-_Cosmic_Destruction.png",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-36",
+    "order": 36,
+    "era": "Ultimate Alien Era",
+    "title": "Cartoon Network: Punch Time Explosion XL",
+    "type": "Game",
+    "year": 2011,
+    "production": "Papaya Studio / Crave",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/playstation/images/0/01/Cartoon-Network-Punch-Time-Explosion.jpeg/revision/latest?cb=20260420015555",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-37",
+    "order": 37,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Galactic Racing",
+    "type": "Game",
+    "year": 2011,
+    "production": "Monkey Bar Games / D3",
+    "status": "Released",
+    "image": "https://i.ebayimg.com/images/g/WP8AAOSwLpda6C2Z/s-l1200.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-38",
+    "order": 38,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimate Defender",
+    "type": "Game",
+    "year": 2011,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/0/0f/Ultimate_Defender.png/revision/latest/scale-to-width-down/1200?cb=20250714130014",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-39",
+    "order": 39,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Aggregor's Attack",
+    "type": "Game",
+    "year": 2011,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/5/5a/Ultimate_Aggregor_HQ_art.png/revision/latest/scale-to-width-down/1200?cb=20240624003814",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-40",
+    "order": 40,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimate Escape",
+    "type": "Game",
+    "year": 2011,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/8/89/Ultimate_Escape.png/revision/latest?cb=20260716035714",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-41",
+    "order": 41,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Alien Hunter",
+    "type": "Game",
+    "year": 2011,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/c/c9/Khyber_standing.png/revision/latest?cb=20260207085435",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-42",
+    "order": 42,
+    "era": "Ultimate Alien Era",
+    "title": "Ben 10: Ultimatrix Unleashed",
+    "type": "Game",
+    "year": 2011,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/6/61/UltiUnleash.png/revision/latest/scale-to-width-down/1200?cb=20241226100947",
+    "source": "https://kotaku.com/ben-10-ultimatrix-unleashed-game"
+  },
+  {
+    "id": "item-43",
+    "order": 43,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse",
+    "type": "TV Show",
+    "year": 2012,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/3c/c8/58/3cc858c6-e9a8-19bd-2875-7eb1019e84e7/Ben10_Omniverse_CSR_S_DD_KA_TT_3000x3000_300dpi_EN.jpg/600x600bb.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_television_series"
+  },
+  {
+    "id": "item-44",
+    "order": 44,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse \u2013 Ghost Ship",
+    "type": "Comic",
+    "year": 2013,
+    "production": "Viz Media / Perfect Square",
+    "status": "Released",
+    "image": "https://comicvine.gamespot.com/a/uploads/scale_small/6/67663/3733005-03.jpg",
+    "source": "https://ben10.fandom.com/wiki/Ben_10"
+  },
+  {
+    "id": "item-45",
+    "order": 45,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse \u2013 Joyrides",
+    "type": "Comic",
+    "year": 2013,
+    "production": "Viz Media / Perfect Square",
+    "status": "Released",
+    "image": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c78abf1e-27c4-4cea-bf1c-2e6d431bd517/dmsq9mt-cf9753a3-3801-4986-b82d-a18357d5f0a7.jpg/v1/fill/w_774,h_1032,q_70,strp/joyrides_by_mileymouse101_dmsq9mt-pre.jpg",
+    "source": "https://ben10.fandom.com/wiki/Ben_10"
+  },
+  {
+    "id": "item-46",
+    "order": 46,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse \u2013 Parallel Paradox",
+    "type": "Comic",
+    "year": 2013,
+    "production": "Viz Media / Perfect Square",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/c88b9536-17bb-406b-a892-b0a34b7b3b46/scale-to-width/755",
+    "source": "https://ben10.fandom.com/wiki/Ben_10"
+  },
+  {
+    "id": "item-47",
+    "order": 47,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse Halloween Special",
+    "type": "Comic",
+    "year": 2013,
+    "production": "IDW Publishing",
+    "status": "Released",
+    "image": "https://media.mycomicshop.com/n_iv/600/1632746.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-48",
+    "order": 48,
+    "era": "Omniverse Era",
+    "title": "Ben 10",
+    "type": "Comic",
+    "year": 2013,
+    "production": "IDW Publishing",
+    "status": "Released",
+    "image": "https://image.isu.pub/131119180514-f5aef8447e323b9059dc0d6f3c9dcf2b/jpg/page_1_social_preview.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-49",
+    "order": 49,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse",
+    "type": "Game",
+    "year": 2012,
+    "production": "Vicious Cycle / D3",
+    "status": "Released",
+    "image": "https://upload.wikimedia.org/wikipedia/en/b/b3/Ben10OmiverseBoxart.png",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-50",
+    "order": 50,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse 2",
+    "type": "Game",
+    "year": 2013,
+    "production": "High Voltage Software / D3",
+    "status": "Released",
+    "image": "https://media.gamestop.com/i/gamestop/10111628/Ben-10-Omniverse-2---Xbox-360?w=768&h=768&fmt=auto",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-51",
+    "order": 51,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Omniverse",
+    "type": "Game",
+    "year": 2013,
+    "production": "GlobalFun (Java)",
+    "status": "Released",
+    "image": "https://img.utdstc.com/screen/92e/57b/92e57bc7b4034b9b5946e70f448f9d3bebfb2dd8733b149c2d97b389d5b7ff6f:600",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-52",
+    "order": 52,
+    "era": "Omniverse Era",
+    "title": "Ben 10: The Return of Psyphon",
+    "type": "Game",
+    "year": 2013,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/f/f2/Returnofpsyphon.png/revision/latest?cb=20180826124208",
+    "source": "https://thegameextras.com/series/ben-10/"
+  },
+  {
+    "id": "item-53",
+    "order": 53,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Wrath of Psychobos",
+    "type": "Game",
+    "year": 2013,
+    "production": "GlobalFun (Mobile)",
+    "status": "Released",
+    "image": "https://images.148apps.com/2013/12/26935/214014/wrathofpsychobos-3-600x450.png",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-54",
+    "order": 54,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Slammers",
+    "type": "Game",
+    "year": 2013,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://cdn.soft112.com/ben-10-slammers-galactic-alien-collectible-card-battle-game-ios/00/00/0G/BC/00000GBC9K/pad_screenshot.jpg",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-55",
+    "order": 55,
+    "era": "Omniverse Era",
+    "title": "Ben 10: Cavern Run",
+    "type": "Game",
+    "year": 2013,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://playerthree.com/wp-content/uploads/IMG_0113.jpg",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-56",
+    "order": 56,
+    "era": "Reboot Era",
+    "title": "Ben 10",
+    "type": "TV Show",
+    "year": 2016,
+    "production": "Cartoon Network Studios (Reboot)",
+    "status": "Released",
+    "image": "https://br.web.img3.acsta.net/r_1280_720/pictures/17/12/18/12/07/4237086.jpg",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_television_series"
+  },
+  {
+    "id": "item-57",
+    "order": 57,
+    "era": "Reboot Era",
+    "title": "Crossover Nexus \u2014 OK K.O.! Let's Be Heroes",
+    "type": "TV Episode",
+    "year": 2018,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/8/86/Let%27s_Go_Universe.png/revision/latest?cb=20230814041809",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-58",
+    "order": 58,
+    "era": "Reboot Era",
+    "title": "Ben 10,010",
+    "type": "TV Special",
+    "year": 2021,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/34c0ce00-4b2b-4113-ae46-282dc56aae1c/dgxtxu4-e7fc904b-03ea-4633-b30e-a3a245de1657.jpg/v1/fill/w_894,h_894,q_70,strp/ben_10_reboot_ben_10_010_full_poster_by_dlee1293847_dgxtxu4-pre.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-59",
+    "order": 59,
+    "era": "Reboot Era",
+    "title": "Ben Gen 10",
+    "type": "TV Special",
+    "year": 2021,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/a/a5/BG10_Intro_%2829%29.png/revision/latest/scale-to-width-down/1200?cb=20210422134110",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-60",
+    "order": 60,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien X-Tinction",
+    "type": "TV Special",
+    "year": 2021,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ca26a648-9c0a-4627-b3b0-d6c9b4fdaaaa/dfl9zi2-9b6055f5-f8c5-4581-866f-68c5ef042eea.jpg",
+    "source": "https://en.wikipedia.org/wiki/Ben_10"
+  },
+  {
+    "id": "item-61",
+    "order": 61,
+    "era": "Reboot Era",
+    "title": "Ben 10 Versus the Universe: The Movie",
+    "type": "Movie",
+    "year": 2020,
+    "production": "Cartoon Network Studios",
+    "status": "Released",
+    "image": "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/2888fb8d-9bec-4804-a01a-50fbdfe83029/49865d492a92e11e97c1b88cda16b171a59455da.jpg?host=wbd-images.prod-vod.h264.io&partner=beamcom&w=500",
+    "source": "https://en.wikipedia.org/wiki/List_of_Ben_10_films"
+  },
+  {
+    "id": "item-62",
+    "order": 62,
+    "era": "Reboot Era",
+    "title": "Ben 10: The Truth Is Out There",
+    "type": "Comic",
+    "year": 2019,
+    "production": "Boom! Studios",
+    "status": "Released",
+    "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1541973643i/42755567.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-63",
+    "order": 63,
+    "era": "Reboot Era",
+    "title": "Ben 10: For Science!",
+    "type": "Comic",
+    "year": 2019,
+    "production": "Boom! Studios",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/3/3a/Ben10_ForScience_SC.png/revision/latest?cb=20190702131532",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-64",
+    "order": 64,
+    "era": "Reboot Era",
+    "title": "Ben 10: Mecha Madness",
+    "type": "Comic",
+    "year": 2019,
+    "production": "Boom! Studios",
+    "status": "Released",
+    "image": "https://www.boom-studios.com/wp-content/uploads/2019/11/Ben10_MechaMadness_Cover_Promo_Newsblock.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-65",
+    "order": 65,
+    "era": "Reboot Era",
+    "title": "Ben 10: The Manchester Mystery",
+    "type": "Comic",
+    "year": 2019,
+    "production": "Boom! Studios",
+    "status": "Released",
+    "image": "https://www.boom-studios.com/wp-content/uploads/2019/07/Ben10_Cover_Promo-Copy.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-66",
+    "order": 66,
+    "era": "Reboot Era",
+    "title": "Ben 10: The Creature from Serenity Shore",
+    "type": "Comic",
+    "year": 2019,
+    "production": "Boom! Studios",
+    "status": "Released",
+    "image": "https://www.boom-studios.com/wp-content/uploads/2019/10/Ben10_CreatureFromSerenityShore_Cover_Promo_Newsblock.jpg",
+    "source": "https://historyofcomics2.com/2025/03/29/media2005-ben-10/"
+  },
+  {
+    "id": "item-67",
+    "order": 67,
+    "era": "Reboot Era",
+    "title": "Ben 10: Hero Matrix",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/a/aa/HeroMatrixGame.png/revision/latest/scale-to-width-down/1200?cb=20250419073717",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-68",
+    "order": 68,
+    "era": "Reboot Era",
+    "title": "Ben 10: Hero Hoops",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/0/09/Ben-10-hero-hoops_UA.png/revision/latest?cb=20251226015901",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-69",
+    "order": 69,
+    "era": "Reboot Era",
+    "title": "Ben 10: Galactic Champions",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/3/3d/Ben_10_galatic_champions.PNG/revision/latest?cb=20201124212112",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-70",
+    "order": 70,
+    "era": "Reboot Era",
+    "title": "Ben 10: Fuel Duel",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/2/24/Fuel_Duel.png/revision/latest?cb=20240808012624",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-71",
+    "order": 71,
+    "era": "Reboot Era",
+    "title": "Ben 10: Forever Defense",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/9/97/ForeverDefenseGame.png/revision/latest?cb=20250417082441",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-72",
+    "order": 72,
+    "era": "Reboot Era",
+    "title": "Ben 10: DNA Lab",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/f/f7/DNALabGame.png/revision/latest?cb=20250419071943",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-73",
+    "order": 73,
+    "era": "Reboot Era",
+    "title": "Ben 10: DNA Decode",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/c/cb/DNA_Decode_Logo.png/revision/latest?cb=20260205021301",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-74",
+    "order": 74,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien Maker",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://preview.redd.it/who-remembers-ben-10-hero-matrix-alien-maker-v0-z3bmcy68hhvc1.jpeg?auto=webp&s=8abef302288e82384bb784f6eaf62024f9cb84ac",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-75",
+    "order": 75,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien Unlock",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/c/c3/Alien_unlock_logo.png/revision/latest?cb=20190503141838",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-76",
+    "order": 76,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien Unlock 2",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/6/6d/Stinkfly_alien_unlock.png/revision/latest?cb=20190527063627",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-77",
+    "order": 77,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omnicode",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://playerthree.com/wp-content/uploads/ben10_omnicode_01.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-78",
+    "order": 78,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omnitrix Shadow",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://play-lh.googleusercontent.com/ouz41fKribJtEXxIDnytZMJvDx1jCtf66D3Y0yEKOdJatxSNMDIBf0oUnhKRyvR8n9NXHLBYtxxdHO_-s2h-Cg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-79",
+    "order": 79,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omnitrix Attack",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://www.cartoongames.cc/_next/image?url=%2Fimg%2Fcartoon-network%2Fben-10-action-attack.webp&w=3840&q=75",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-80",
+    "order": 80,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omnitrix Glitch",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://play-lh.googleusercontent.com/Or1gHixSnhJ-y1SIZUl-KhiMHWKyE8ABry2SqrGH1UXmsTZobkmi1bEphxlQkkIRarMty0JdJyw_DNgCNTkTMg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-81",
+    "order": 81,
+    "era": "Reboot Era",
+    "title": "Ben 10: Hero Time",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://m.gjcdn.net/game-screenshot/600/33432421-m8vgkidu-v4.webp",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-82",
+    "order": 82,
+    "era": "Reboot Era",
+    "title": "Ben 10: World Rescue",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/5/57/Ben10_world_rescue.PNG/revision/latest?cb=20191028163222",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-83",
+    "order": 83,
+    "era": "Reboot Era",
+    "title": "Ben 10: Upgrade Chasers",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/1/15/Heroes_United_Opening.png/revision/latest/smart/width/386/height/259?cb=20150601204223",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-84",
+    "order": 84,
+    "era": "Reboot Era",
+    "title": "Ben 10: Upgrade Match",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/4/41/Upgrade_Match.png/revision/latest?cb=20251223233105",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-85",
+    "order": 85,
+    "era": "Reboot Era",
+    "title": "Ben 10: Upgrade: Space Battle",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/d/d0/UpgradeSpaceBattle.png/revision/latest/scale-to-width-down/1200?cb=20210613075839",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-86",
+    "order": 86,
+    "era": "Reboot Era",
+    "title": "Ben 10: Cannonbolt Crash",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/b/b4/Cannonbolt_crash.PNG/revision/latest?cb=20230625051917",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-87",
+    "order": 87,
+    "era": "Reboot Era",
+    "title": "Ben 10: Cannonbolt Pinball \u2013 Ghostfreak's Revenge",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://pinballbayarea.com/wp-content/uploads/2010/12/flashpin2.png?w=600&h=390",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-88",
+    "order": 88,
+    "era": "Reboot Era",
+    "title": "Ben 10: Four Arms Smash",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/1/18/Ben_10_Super_Hero_Time_Title_Screen.png/revision/latest/smart/width/386/height/259?cb=20260407165544",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-89",
+    "order": 89,
+    "era": "Reboot Era",
+    "title": "Ben 10: Grey Matter Leap",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/f/f8/Grey_Matter_Leap.png/revision/latest/scale-to-width-down/1200?cb=20251223232955",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-90",
+    "order": 90,
+    "era": "Reboot Era",
+    "title": "Ben 10: Heatblast Fight",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/b/bb/Fastboi_run.png/revision/latest/smart/width/386/height/259?cb=20180719235303",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-91",
+    "order": 91,
+    "era": "Reboot Era",
+    "title": "Ben 10: Overflow Fight",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/4/43/Overflow_Fight.png/revision/latest/scale-to-width-down/1200?cb=20251223233234",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-92",
+    "order": 92,
+    "era": "Reboot Era",
+    "title": "Ben 10: Wildvine Shoot",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://shop.forestrygames.com/game_images/ben-10-wildvine-shoot.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-93",
+    "order": 93,
+    "era": "Reboot Era",
+    "title": "Ben 10: Stinkfly Avoid",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/b/b2/Stinkfly_Avoid.png/revision/latest?cb=20251223232819",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-94",
+    "order": 94,
+    "era": "Reboot Era",
+    "title": "Ben 10: Stinkfly's Showtime!",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/b/bf/Ben_Tennyson.png/revision/latest/scale-to-width/360?cb=20210323221146",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-95",
+    "order": 95,
+    "era": "Reboot Era",
+    "title": "Ben 10: Rustbucket Rescue",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/d/dc/Rustbucket_Rescue.png/revision/latest?cb=20201203185645",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-96",
+    "order": 96,
+    "era": "Reboot Era",
+    "title": "Ben 10: Escape Route",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/4/4a/Escape_Furry.png/revision/latest/thumbnail/width/360/height/360?cb=20250721010226",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-97",
+    "order": 97,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien Rush",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/0/08/Ben_10_Alien_Rush.png/revision/latest?cb=20160922004636",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-98",
+    "order": 98,
+    "era": "Reboot Era",
+    "title": "Ben 10: Diamondhead Shoot",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/f/f3/Diamondhead_shoot_game.png/revision/latest/scale-to-width-down/985?cb=20241017094939",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-99",
+    "order": 99,
+    "era": "Reboot Era",
+    "title": "Ben 10: Penalty Power",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/8/86/Penalty_Power.png/revision/latest/scale-to-width-down/1200?cb=20210404173210",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-100",
+    "order": 100,
+    "era": "Reboot Era",
+    "title": "Ben 10: Power Surge",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://img.tapimg.net/market/images/be13f74e947977dd08e4ba0b9797a0c5.png",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-101",
+    "order": 101,
+    "era": "Reboot Era",
+    "title": "Ben 10: Steam Camp",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://play-lh.googleusercontent.com/Z680i-gTZoEup8VXDCXMw5XKUMxs7bC19xbMY0XG12BZpu_kzJ4xRX_0SKYdsU75oYOqN8A9MYjpjEm8fBLu=w526-h296-rw",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-102",
+    "order": 102,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omniball Battles",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/7/7d/Omniball_Battles.png/revision/latest/scale-to-width-down/1200?cb=20210420100716",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-103",
+    "order": 103,
+    "era": "Reboot Era",
+    "title": "Ben 10: Critical Impact",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/0/09/CriticalImpactGame.png/revision/latest/scale-to-width-down/1200?cb=20250417091434",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-104",
+    "order": 104,
+    "era": "Reboot Era",
+    "title": "Ben 10: Final Clash",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://cdn.gamingcloud.com/img/general/games/screen/18531.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-105",
+    "order": 105,
+    "era": "Reboot Era",
+    "title": "Ben 10: Super Hero Time",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/1/18/Ben_10_Super_Hero_Time_Title_Screen.png/revision/latest?cb=20260407165544",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-106",
+    "order": 106,
+    "era": "Reboot Era",
+    "title": "Ben 10: Ultimate Crisis",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (Browser)",
+    "status": "Released",
+    "image": "https://kotaku.com/igdb/image/upload/t_720p/scsdko.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-107",
+    "order": 107,
+    "era": "Reboot Era",
+    "title": "Ben 10: World Rescue",
+    "type": "Game",
+    "year": 2016,
+    "production": "Cartoon Network (HTML5)",
+    "status": "Released",
+    "image": "https://shop.forestrygames.com/game_images/ben-10-world-rescue.jpg",
+    "source": "https://www.youtube.com/watch?v=2Ov5J_CDfrs"
+  },
+  {
+    "id": "item-108",
+    "order": 108,
+    "era": "Reboot Era",
+    "title": "Ben 10",
+    "type": "Game",
+    "year": 2017,
+    "production": "Torus Games / Outright Games",
+    "status": "Released",
+    "image": "https://static.wikia.nocookie.net/ben10/images/2/22/Ben_10_%282017%29_video_game.png/revision/latest?cb=20170829205532",
+    "source": "https://en.bandainamcoent.eu/ben-10/ben-10"
+  },
+  {
+    "id": "item-109",
+    "order": 109,
+    "era": "Reboot Era",
+    "title": "Ben 10: Alien Evolution",
+    "type": "Game",
+    "year": 2018,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://play-lh.googleusercontent.com/TD0PbhBTkIHDLnwjswqS9RnveLdRB21S4qgElUs7j-OgqcptD0K7oT48_S-emDmr8o5y-B3jPqMX-kXdhO9AHw=s0-br30",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-110",
+    "order": 110,
+    "era": "Reboot Era",
+    "title": "Ben 10: Up to Speed",
+    "type": "Game",
+    "year": 2018,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://cdn.soft112.com/ben-10-up-to-speed-ios/00/00/0H/G0/00000HG0ZA/pad_screenshot.jpg",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-111",
+    "order": 111,
+    "era": "Reboot Era",
+    "title": "Ben 10 Heroes",
+    "type": "Game",
+    "year": 2018,
+    "production": "Epic Story Interactive (Mobile)",
+    "status": "Released",
+    "image": "https://cdn.soft112.com/ben-10-heroes/00/00/0H/CH/00000HCHXU/pad_screenshot.png",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-112",
+    "order": 112,
+    "era": "Reboot Era",
+    "title": "Ben 10: Omnitrix Hero",
+    "type": "Game",
+    "year": 2018,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://img.utdstc.com/screen/4d8/868/4d886876ae420a4cc3e53f6c472b564329a4deea53e71ff58c5acabccf5e3709:600",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-113",
+    "order": 113,
+    "era": "Reboot Era",
+    "title": "Ben 10: Family Genius",
+    "type": "Game",
+    "year": 2018,
+    "production": "Cartoon Network (Mobile)",
+    "status": "Released",
+    "image": "https://play-lh.googleusercontent.com/Mz3urD5V-lDzdoF0WDYO5W3SUoJAMdv1neh0pIoQnptyoL-cfVEBEJUfgMmIsQGebLGq2m7haVGus2Xyz-FfGQ",
+    "source": "https://ben10.fandom.com/wiki/Game_Generator/Gallery"
+  },
+  {
+    "id": "item-114",
+    "order": 114,
+    "era": "Reboot Era",
+    "title": "Ben 10: Power Trip",
+    "type": "Game",
+    "year": 2020,
+    "production": "PHL Collective / Outright Games",
+    "status": "Released",
+    "image": "https://store-images.s-microsoft.com/image/apps.683.13672727399820228.e1322d27-4961-46da-9c7b-c310d3e28cb1.e9be41b7-c7f3-4c93-b981-113631a8fa2d",
+    "source": "https://en.bandainamcoent.eu/ben-10/ben-10"
+  },
+  {
+    "id": "item-115",
+    "order": 115,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #1",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://www.dynamite.com/previews/C72513036343501011/BEN1001DPIRIZ.jpg",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-116",
+    "order": 116,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #2",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/1500x1500/products/57915/57687/TNBEN1002ACAREY__42289.1775670192.jpg?c=1",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-117",
+    "order": 117,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #3",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/608x608/products/57938/57710/TNBEN1003ACAREY__17565.1777496301.jpg?c=1",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-118",
+    "order": 118,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #4",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/1500x1500/products/57988/57761/TNBEN1004ACAREY__69758.1779738351.jpg?c=1",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-119",
+    "order": 119,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #5",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/1500x1500/products/58019/57792/TNBEN1005ACAREY__82366.1782160523.jpg?c=1&imbypass=on",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-120",
+    "order": 120,
+    "era": "Dynamite Era",
+    "title": "Ben 10: Creator Files #1",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/608x608/products/60555/60009/TNBen1001CreatorFilesCOVACARREY__91372.1785434366.jpg?c=1",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-121",
+    "order": 121,
+    "era": "Dynamite Era",
+    "title": "Ben 10 Vol. 1: Event Arrival",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/images/stencil/1500x1500/products/60704/60151/BEN10Vol1SignedTPB__08077.1787950245.jpg?c=1&imbypass=on",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-122",
+    "order": 122,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #6",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Released",
+    "image": "https://i.redd.it/xkqtcpy486kh1.jpg",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-123",
+    "order": 123,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #7",
+    "type": "Comic",
+    "year": 2026,
+    "production": "Dynamite Entertainment",
+    "status": "Upcoming",
+    "image": "https://cdn11.bigcommerce.com/s-fle6qzf7oq/products/61727/images/61115/TNBEN1007ACAREY__07609.1789749234.386.513.jpg?c=1",
+    "source": "https://dynamite.com/titles/ben-10/"
+  },
+  {
+    "id": "item-124",
+    "order": 124,
+    "era": "Dynamite Era",
+    "title": "Ben 10 #8",
+    "type": "Comic",
+    "year": 2027,
+    "production": "Dynamite Entertainment",
+    "status": "Upcoming",
+    "image": "https://preview.redd.it/cover-for-issue-v0-vh94b3x36pth1.png?width=700&format=png&auto=webp&s=f04a8516201d85fe7a1461c8d23d5c1783d02e44",
+    "source": "https://dynamite.com/titles/ben-10/"
+  }
+];
+
+const KEY = "ben10_archive_checked_v5";
+let checked = new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
+let mode = "all", sortMode = "story";
+const $ = id => document.getElementById(id);
+const types = [...new Set(DATA.map(x=>x.type))];
+types.forEach(x=>{let o=document.createElement("option");o.value=x;o.textContent=x;$("type").append(o)});
+
+function save(){localStorage.setItem(KEY,JSON.stringify([...checked]));}
+function updateStats(){
+ const done=DATA.filter(x=>checked.has(x.id)).length, total=DATA.length, pct=total?Math.round(done/total*100):0;
+ $("total").textContent=total;$("completed").textContent=done;$("remaining").textContent=total-done;$("percent").textContent=pct+"%";
+ $("bar").style.width=pct+"%";$("progressText").textContent=done+" of "+total+" entries completed.";
+}
+function render(){
+ const q=$("search").value.toLowerCase(), type=$("type").value, status=$("status").value;
+ let list=DATA.filter(x=>(!type||x.type===type)&&(!status||x.status===status)&&
+  (!q||(x.title+" "+x.era+" "+x.type+" "+x.year+" "+x.production).toLowerCase().includes(q))&&
+  (mode==="all"||(mode==="done"&&checked.has(x.id))||(mode==="incomplete"&&!checked.has(x.id))));
+ list.sort((a,b)=>sortMode==="story"?a.order-b.order:a.year-b.year||a.order-b.order);
+ const root=$("results");root.innerHTML="";
+ if(!list.length){root.innerHTML='<div class="empty">No matching entries. Try a different search or filter.</div>';updateStats();return}
+ list.forEach(x=>{
+  const card=document.createElement("article");card.className="card";
+  const art=x.image?`<img class="poster" loading="lazy" src="${esc(x.image)}" alt="${esc(x.title)} poster or cover" onerror="this.outerHTML='<div class=&quot;placeholder&quot;>10</div>'">`:'<div class="placeholder">10</div>';
+  card.innerHTML=`${art}<div><h3>${esc(x.title)}</h3><div class="meta"><span class="pill era">${esc(x.era)}</span><span class="pill type">${esc(x.type)}</span><span class="pill">${esc(x.year)}</span><span class="pill prod">${esc(x.production)}</span><span class="pill status">${esc(x.status)}</span></div><div class="cardfoot"><label class="check"><input type="checkbox" ${checked.has(x.id)?"checked":""}> Completed</label>${x.source?`<a class="source" href="${esc(x.source)}" target="_blank" rel="noopener">Source ↗</a>`:""}</div></div>`;
+  const cb=card.querySelector("input");cb.addEventListener("change",()=>{if(cb.checked)checked.add(x.id);else checked.delete(x.id);save();updateStats();if(mode!=="all")render()});
+  root.append(card);
+ });
+ updateStats();
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+["search","type","status"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("showAll").onclick=()=>{mode="all";render()};$("showIncomplete").onclick=()=>{mode="incomplete";render()};$("showDone").onclick=()=>{mode="done";render()};
+$("sortStory").onclick=()=>{sortMode="story";$("sortStory").textContent="Era order ✓";$("sortRelease").textContent="Release year";render()};
+$("sortRelease").onclick=()=>{sortMode="release";$("sortRelease").textContent="Release year ✓";$("sortStory").textContent="Era order";render()};
+$("reset").onclick=()=>{if(confirm("Clear all completed checkmarks saved in this browser?")){checked.clear();save();render()}};
+render();
+
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"||location.hostname==="127.0.0.1")){
+  const swCode=`const CACHE="ben10-archive-v1";self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll([location.href])).then(()=>self.skipWaiting()))});self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});self.addEventListener("fetch",e=>{if(e.request.mode==="navigate"){e.respondWith(fetch(e.request).catch(()=>caches.match(location.href)))}})`;
+  const swUrl=URL.createObjectURL(new Blob([swCode],{type:"application/javascript"}));
+  navigator.serviceWorker.register(swUrl).catch(()=>{});
+}
+</script>
+</body>
+</html>
